@@ -297,7 +297,7 @@ def ngram_creator(text_list):
 # 
 # Return a frequency comparison score equal to the mutual appearances divided by the total appearances.
 
-# In[34]:
+# In[40]:
 
 
 def frequency_comparison(table1, table2):
@@ -313,8 +313,9 @@ def frequency_comparison(table1, table2):
                 appearances += table1[key]
                 mutual_appearances += table2[key]
             else:
-                appearances += table2[key]
-                mutual_appearances += table1[key]
+                if table2[key] > table1[key]:
+                    appearances += table2[key]
+                    mutual_appearances += table1[key]
         else:
             appearances += table1[key]
     for a_key in table2.keys():
@@ -336,7 +337,7 @@ def frequency_comparison(table1, table2):
 # 
 # In the numerator is the absolute value (use `abs()`) of the two values subtracted from each other. In the denominator is the average of the two values (value1 + value2 divided by two).
 
-# In[35]:
+# In[41]:
 
 
 def percent_difference(value1, value2):
@@ -352,7 +353,7 @@ def percent_difference(value1, value2):
 # - Calculate the difference between their two-word ngram using `frequency_table` on both `TextSample`'s `ngram_frequency` attributes. Save that into a variable called `ngram_similarity`.
 # - Add all three similarities together and divide by 3.
 
-# In[36]:
+# In[42]:
 
 
 def find_text_similarity(text1, text2):
@@ -376,7 +377,7 @@ def find_text_similarity(text1, text2):
 # 
 # In the cell below, print the name of the person who killed Jay Stacksby.
 
-# In[39]:
+# In[44]:
 
 
 print("Lily Trebuchet's similarity score is:", find_text_similarity(lily_trebuchet_intro, murder_note))
