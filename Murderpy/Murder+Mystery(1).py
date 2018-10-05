@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[ ]:
+# In[28]:
 
 
 # Preamble: A Brand New Jay
@@ -27,7 +27,7 @@ Gregg T Fishy's introduction letter:
 # 
 # First let's create variables to hold the text data in! Save the muder note as a string in a variable called `murder_note`. Save Lily Trebuchet's introduction into `lily_trebuchet_intro`. Save Myrtle Beech's introduction into `myrtle_beech_intro`. Save Gregg T Fishy's introduction into `gregg_t_fishy_intro`.
 
-# In[42]:
+# In[ ]:
 
 
 murder_note = """
@@ -107,7 +107,7 @@ I cannot wait to enjoy being on A Brand New Jay. It certainly seems like a grand
 # 
 # Remember sentences can end with more than one kind of punctuation, you might find it easiest to use **.replace()** so you only have to split on one punctuation mark. Remember **.replace()** doesn't modify the string itself, it returns a new string!</font>
 
-# In[43]:
+# In[ ]:
 
 
 def get_average_sentence_length(text):
@@ -165,7 +165,7 @@ def get_average_sentence_length(text):
 #  
 # This will be your main class for the problem at hand. All later instruction to update `TextSample` should be done in the code block below. After updating `TextSample`, click on the `Cell` option in the Jupyter Notebook main menu above, then click `Run All` to rerun the cells from top to bottom. If you need to restart your Jupyter Notebook either run the cells below first or move the `TextSample` class definition & instantiation cells to the bottom.
 
-# In[44]:
+# In[ ]:
 
 
 class TextSample:
@@ -192,7 +192,7 @@ class TextSample:
 #  
 # Print out each one after instantiating them.
 
-# In[45]:
+# In[ ]:
 
 
 murderer_sample = TextSample(murder_note, "murderer")
@@ -214,7 +214,7 @@ print(gregg_sample)
 # 
 # For example: `"Where did you go, friend? We nearly saw each other."` would become `['where', 'did', 'you', 'go', 'friend', 'we', 'nearly', 'saw', 'each', 'other']`.
 
-# In[46]:
+# In[ ]:
 
 
 def prepare_text(text):
@@ -245,7 +245,7 @@ def prepare_text(text):
 # 
 # Now we want to see which words were most frequently used in each of the samples. Create a function called `build_frequency_table`. It takes in a list called `corpus` and creates a dictionary called `frequency_table`. For every element in `corpus` the value `frequency_table[element]` should be equal to the number of times that element appears in `corpus`. For example the input `['do', 'you', 'see', 'what', 'i', 'see']` would create the frequency table `{'what': 1, 'you': 1, 'see' 2, 'i': 1}`.
 
-# In[47]:
+# In[ ]:
 
 
 def build_frequency_table(corpus):
@@ -270,7 +270,7 @@ def build_frequency_table(corpus):
 # 
 # These are two-word n-grams.
 
-# In[48]:
+# In[ ]:
 
 
 def ngram_creator(text_list):
@@ -297,7 +297,7 @@ def ngram_creator(text_list):
 # 
 # Return a frequency comparison score equal to the mutual appearances divided by the total appearances.
 
-# In[49]:
+# In[ ]:
 
 
 def frequency_comparison(table1, table2):
@@ -334,7 +334,7 @@ def frequency_comparison(table1, table2):
 # 
 # In the numerator is the absolute value (use `abs()`) of the two values subtracted from each other. In the denominator is the average of the two values (value1 + value2 divided by two).
 
-# In[50]:
+# In[ ]:
 
 
 def percent_difference(value1, value2):
@@ -350,14 +350,16 @@ def percent_difference(value1, value2):
 # - Calculate the difference between their two-word ngram using `frequency_table` on both `TextSample`'s `ngram_frequency` attributes. Save that into a variable called `ngram_similarity`.
 # - Add all three similarities together and divide by 3.
 
-# In[63]:
+# In[ ]:
 
 
 def find_text_similarity(text1, text2):
     sentence_length_difference = percent_difference(get_average_sentence_length(text1), get_average_sentence_length(text2))
     sentence_length_similarity = abs(1 - sentence_length_difference)
-    word_count_similarity = frequency_comparison(build_frequency_table(text1), build_frequency_table(text2))
-    ngram_similarity = frequency_comparison(build_frequency_table(ngram_creator(prepare_text(text1))), (build_frequency_table(ngram_creator(prepare_text(text2)))))
+    text1 = TextSample(text1, "this note")
+    text2 = TextSample(text2, "murderer's note")
+    word_count_similarity=frequency_comparison(text1.word_count_frequency, text2.word_count_frequency)
+    ngram_similarity = frequency_comparison(text1.ngram_frequency, text2.ngram_frequency)
     return((sentence_length_similarity + word_count_similarity + ngram_similarity)/3)
 
 
@@ -372,12 +374,18 @@ def find_text_similarity(text1, text2):
 # 
 # In the cell below, print the name of the person who killed Jay Stacksby.
 
-# In[70]:
+# In[29]:
 
 
-print(lily_sample,",similarity score is:", find_text_similarity(lily_trebuchet_intro, murder_note))
-print(myrtle_sample,",similarity score is:", find_text_similarity(myrtle_beech_intro, murder_note))
-print(gregg_sample,",similarity score is:", find_text_similarity(gregg_t_fishy_intro, murder_note))
+print("Lily Trebuchet's similarity score is:", find_text_similarity(lily_trebuchet_intro, murder_note))
+print("Myrtle Beech's similarity score is:", find_text_similarity(myrtle_beech_intro, murder_note))
+print("Gregg T Fishy's similarity score is:", find_text_similarity(gregg_t_fishy_intro, murder_note))
+
+
+# In[30]:
+
+
+print("I think the killer is Myrtle Beech because of her relatively higher similarity score")
 
 
 # print("I think the killer is Lily Trebuchet because of her relatively higher similarity score")
