@@ -297,7 +297,7 @@ def ngram_creator(text_list):
 # 
 # Return a frequency comparison score equal to the mutual appearances divided by the total appearances.
 
-# In[ ]:
+# In[34]:
 
 
 def frequency_comparison(table1, table2):
@@ -311,8 +311,10 @@ def frequency_comparison(table1, table2):
         if key in table2_keys:
             if table1[key] > table2[key]:
                 appearances += table1[key]
-            else:
                 mutual_appearances += table2[key]
+            else:
+                appearances += table2[key]
+                mutual_appearances += table1[key]
         else:
             appearances += table1[key]
     for a_key in table2.keys():
@@ -334,7 +336,7 @@ def frequency_comparison(table1, table2):
 # 
 # In the numerator is the absolute value (use `abs()`) of the two values subtracted from each other. In the denominator is the average of the two values (value1 + value2 divided by two).
 
-# In[ ]:
+# In[35]:
 
 
 def percent_difference(value1, value2):
@@ -350,14 +352,14 @@ def percent_difference(value1, value2):
 # - Calculate the difference between their two-word ngram using `frequency_table` on both `TextSample`'s `ngram_frequency` attributes. Save that into a variable called `ngram_similarity`.
 # - Add all three similarities together and divide by 3.
 
-# In[ ]:
+# In[36]:
 
 
 def find_text_similarity(text1, text2):
     sentence_length_difference = percent_difference(get_average_sentence_length(text1), get_average_sentence_length(text2))
     sentence_length_similarity = abs(1 - sentence_length_difference)
     text1 = TextSample(text1, "this note")
-    text2 = TextSample(text2, "murderer's note")
+    text2 = TextSample(text2, "that note")
     word_count_similarity=frequency_comparison(text1.word_count_frequency, text2.word_count_frequency)
     ngram_similarity = frequency_comparison(text1.ngram_frequency, text2.ngram_frequency)
     return((sentence_length_similarity + word_count_similarity + ngram_similarity)/3)
@@ -374,7 +376,7 @@ def find_text_similarity(text1, text2):
 # 
 # In the cell below, print the name of the person who killed Jay Stacksby.
 
-# In[29]:
+# In[39]:
 
 
 print("Lily Trebuchet's similarity score is:", find_text_similarity(lily_trebuchet_intro, murder_note))
